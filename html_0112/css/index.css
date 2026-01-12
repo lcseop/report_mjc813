@@ -7,8 +7,11 @@
 }
 .btns {
   display: flex;
-  justify-items: space-around;
-  margin-top: 5px;
+  justify-content: space-around;
+}
+.btn {
+    border-radius: 5px;
+    width: 33%;
 }
 
 .listTitleRow div {
@@ -19,4 +22,7 @@
 .listItem2 {
     border: 1px solid black;
     margin: 1px;
+}
+#name, #cls, #cx, #hp, #mp, #str, #int, #dex, #lux, #birthDate, #imgURL, #btn {
+    width: 85%;
 }
