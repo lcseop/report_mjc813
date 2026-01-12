@@ -221,12 +221,12 @@ class Rpgfuncs {
         $("#name").val("");
         $("#cls").val("war");
         $("#sx").val("woman");
-        $("#hp").val("0");
-        $("#mp").val("0");
-        $("#str").val("0");
-        $("#int").val("0");
-        $("#dex").val("0");
-        $("#lux").val("0");
+        $("#hp").val("100");
+        $("#mp").val("100");
+        $("#str").val("1");
+        $("#int").val("1");
+        $("#dex").val("1");
+        $("#lux").val("1");
         $("#birthDate").val("");
         $("#imgURL").val("");
         this.#selectedId = -1;
