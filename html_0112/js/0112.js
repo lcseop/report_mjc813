@@ -33,9 +33,9 @@ class Rpgfuncs {
 
     // 리스트의 내역 수정 후 리스트에 정렬
     printList() {
-        $(".charList").empty();
+        $(".listTitleRow").empty();
         this.#character.forEach((item) => {
-            $(".charList").append(printRow(item));
+            $(".listTitleRow").append(this.printRow(item));
         });
     }
     
@@ -60,7 +60,39 @@ class Rpgfuncs {
     // html return
     printRow(item) {
         
-        let html = ``;
+        let html = `
+        <div class="lists">
+            <div class="listItem">
+              <div class="listItem2">${item.name}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${this.printClass(item.cls)}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${this.printSx(item.sx)}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.hp}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.mp}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.str}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.int}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.dex}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.lux}</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">${item.birthDate.getFullYear()}-${item.birthDate.getMonth()+1}-${item.birthDate.getDate()}</div>
+            </div>
+        </div>`;
 
         return html;
     }
@@ -72,29 +104,36 @@ class Rpgfuncs {
 
             if (type === "int" && this.#character[this.#selectedId].mp >= 50) {
                alert("마나가 부족합니다.");
+               return false;
             }
 
             if (targetChara.hp <= 0) {
                alert("대상이 이미 쓰러졌습니다.");
+               return false;
             }
         }
         else {
             if (mode !== "add" && this.#selectedId === -1) {
-            alert("목록에서 캐릭터를 먼저 선택해주세요.");
+                alert("목록에서 캐릭터를 먼저 선택해주세요.");
+                return false;
             }
 
             if (mode !== "del" && ($("#name").val().length < 1 || $("#hp").val().length < 1 || $("#mp").val().length < 1 || $("#str").val().length < 1 || $("#dex").val().length < 1) || $("#int").val().length < 1 || $("#lux").val().length < 1) {
                 alert("모든 입력란에 값을 입력해주세요.");
+                return false;
             }
 
             if ($("#name").val().length < 2 || $("#name").val().length > 10) {
                 alert("이름은 2자~10자로 입력해주세요.");
+                return false;
             }
 
             if ($("#name").val().length < 2 || $("#name").val().length > 10) {
                 alert("이름은 2자~10자로 입력해주세요.");
+                return false;
             }
         }
+        return true;
     }
 
     // 목록 선택 시 값 입력
@@ -108,9 +147,16 @@ class Rpgfuncs {
         $("#int").val(this.#character[index].int);
         $("#dex").val(this.#character[index].dex);
         $("#lux").val(this.#character[index].lux);
-        $("#birthDate").datepicker("setDate", this.#character[index].birthDate);
+        // $("#birthDate").datepicker("setDate", this.#character[index].birthDate);
         $("#showImg").val(this.#character[index].imgUrl);
         this.#selectedId = this.#character[index].id;
+
+        $(".attacked_target").empty();
+        this.#character.forEach((item) => {
+            if (item.id !== this.#selectedId) {
+                $(".attacked_target").append(`<option></option>`);
+            }
+        })
     }
 
     // Input 값 초기화
@@ -124,7 +170,7 @@ class Rpgfuncs {
         $("#int").val("0");
         $("#dex").val("0");
         $("#lux").val("0");
-        $("#birthDate").datepicker("setDate", new Date());
+        // $("#birthDate").datepicker("setDate", new Date());
         this.#selectedId = -1;
     }
 
@@ -142,7 +188,7 @@ class Rpgfuncs {
                 int: parseInt($("#int").val()),
                 dex: parseInt($("#dex").val()),
                 lux: parseInt($("#lux").val()),
-                birthDate: $("#birthDate").datePicker("getDate")
+                // birthDate: $("#birthDate").datePicker("getDate")
             };
 
             this.#character.push(newChara);
@@ -165,7 +211,7 @@ class Rpgfuncs {
             targetChara.int = $("#int").val();
             targetChara.dex = $("#dex").val();
             targetChara.lux = $("#lux").val();
-            targetChara.birthDate = $("#birthDate").datePicker("getDate");
+            // targetChara.birthDate = $("#birthDate").datePicker("getDate");
 
             this.clearInput();
         }
@@ -253,7 +299,7 @@ $(() => {
         rpg.attackInt();
     });
 
-    $(document).on("click", ".charList", function(e) {
+    $(document).on("click", ".lists", function(e) {
         rpg.setInputChara($(this).index());
     })
 });
