@@ -232,6 +232,7 @@ class Rpgfuncs {
         this.#selectedId = -1;
 
         $(".attacked_target").empty();
+        rpg.imgChange();
     }
 
     // 캐릭터 추가
@@ -298,13 +299,14 @@ class Rpgfuncs {
         if (this.checkChara("att", "str")) {
             let attackChara = this.#character.find(item => this.#selectedId === item.id);
             let targetChara = this.#character.find(item => parseInt($("#hidden1").val()) === item.id);
-            targetChara.hp -= 50;
+
+            targetChara.hp -= 30;
             if (targetChara.hp <= 0) {
                 targetChara.hp = 0;
-                alert(`${attackChara.name}이(가) ${targetChara.name}에게 50의 피해를 입혔다!
+                alert(`${attackChara.name}이(가) ${targetChara.name}에게 30의 피해를 입혔다!
                 ${targetChara.name}은(는) 쓰러졌다.`);
             } else {
-                alert(`${attackChara.name}이(가) ${targetChara.name}에게 50의 피해를 입혔다!
+                alert(`${attackChara.name}이(가) ${targetChara.name}에게 30의 피해를 입혔다!
                 ${targetChara.name}의 남은 체력 : ${targetChara.hp}`);
             }
             this.printList();
@@ -338,10 +340,13 @@ class Rpgfuncs {
         if (type === "str") {
             $("#hidden1").val(this.#targets[$('#atc_target1 option:selected').index()].id);
         } else {
-            $("#hidden1").val(this.#targets[$('#atc_target2 option:selected').index()].id);
+            $("#hidden2").val(this.#targets[$('#atc_target2 option:selected').index()].id);
         }
     }
 
+    imgChange() {
+        $("#showImg").attr("src", $("#imgURL").val());
+    }
 
     // 디버깅용
     viewTest() {
@@ -354,6 +359,7 @@ class Rpgfuncs {
 $(() => {
     rpg = new Rpgfuncs();
     rpg.printList();
+    $(".attacked_target").empty();
 
     $("#addC").click(function(e) {
         rpg.insertChara();
@@ -384,6 +390,10 @@ $(() => {
     });
 
     $(document).on("change", "#atc_target2", function(e) {
-       rpg.selectTarget("int");
+        rpg.selectTarget("int");
+    });
+
+    $(document).on("change", "#imgURL", function(e) {
+        rpg.imgChange();
     });
 });
