@@ -1,13 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>내거 올라가aa나/</h1>
-    <div>수정</div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RPG 게임 캐릭터</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <header>
+      <h1>게임 캐릭터 관리</h1>
+    </header>
+    <main>
+      <section id="inputSection">
+        <fieldset class="inputField">
+          <legend>캐릭터 입력</legend>
+          <div class="inputItem">
+            <div class="name">
+              이름 :
+              <input type="text" id="name" maxlength="5" />
+            </div>
+            <div class="cls">
+              직업 :
+              <select id="cls">
+                <option value="war">전사</option>
+                <option value="wiz">마법사</option>
+                <option value="arc">궁수</option>
+                <option value="thi">도적</option>
+              </select>
+            </div>
+            <div class="cx">
+              성별 : <input type="radio" name="gender" value="woman" />여성
+              <input type="radio" name="gender" value="man" />남성
+            </div>
+            <div class="HP">
+              HP :
+              <input type="number" id="HP" />
+            </div>
+            <div class="mp">
+              MP :
+              <input type="number" id="HP" />
+            </div>
+            <div class="str">
+              STR :
+              <input type="number" id="HP" />
+            </div>
+            <div class="int">
+              INT :
+              <input type="number" id="HP" />
+            </div>
+            <div class="dex">
+              DEX :
+              <input type="number" id="HP" />
+            </div>
+            <div class="lux">
+              LUX :
+              <input type="number" id="HP" />
+            </div>
+          </div>
+        </fieldset>
+      </section>
+    </main>
+  </body>
 </html>
 <script src=""></script>
