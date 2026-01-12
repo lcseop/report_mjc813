@@ -34,6 +34,39 @@ class Rpgfuncs {
     // 리스트의 내역 수정 후 리스트에 정렬
     printList() {
         $(".listTitleRow").empty();
+
+
+        $(".listTitleRow").append(` <div class="listItem">
+              <div class="listItem2">이름</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">직업</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">성별</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">HP</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">MP</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">STR</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">INT</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">DEX</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">LUX</div>
+            </div>
+            <div class="listItem">
+              <div class="listItem2">생일</div>
+            </div>`)
+
         this.#character.forEach((item) => {
             $(".listTitleRow").append(this.printRow(item));
         });
@@ -59,7 +92,6 @@ class Rpgfuncs {
 
     // html return
     printRow(item) {
-        
         let html = `
         <div class="lists">
             <div class="listItem">
@@ -99,10 +131,19 @@ class Rpgfuncs {
 
     // 조건 체크
     checkChara(mode, type="") {
+        if (mode !== "add" && this.#selectedId === -1) {
+                alert("목록에서 캐릭터를 먼저 선택해주세요.");
+                return false;
+            }
         if (mode === "att") {
-            let targetChara = this.#character.find(item => $("targetSId").val() === item.id);
+            
+            let targetChara = (type === "str") ? (this.#character.find(item => $("#atc_target1").val() === item.name)) : (this.#character.find(item => $("#atc_target2").val() === item.name));
+            if ($(".attacked_target").val() === "") {
+               alert("공격 대상이 없습니다.");
+               return false;
+            }
 
-            if (type === "int" && this.#character[this.#selectedId].mp >= 50) {
+            if (type === "int" && this.#character[this.#selectedId].mp < 50) {
                alert("마나가 부족합니다.");
                return false;
             }
@@ -113,11 +154,6 @@ class Rpgfuncs {
             }
         }
         else {
-            if (mode !== "add" && this.#selectedId === -1) {
-                alert("목록에서 캐릭터를 먼저 선택해주세요.");
-                return false;
-            }
-
             if (mode !== "del" && ($("#name").val().length < 1 || $("#hp").val().length < 1 || $("#mp").val().length < 1 || $("#str").val().length < 1 || $("#dex").val().length < 1) || $("#int").val().length < 1 || $("#lux").val().length < 1) {
                 alert("모든 입력란에 값을 입력해주세요.");
                 return false;
@@ -140,21 +176,22 @@ class Rpgfuncs {
     setInputChara(index) {
         $("#name").val(this.#character[index].name);
         $("#cls").val(this.#character[index].cls);
-        $("#sx").val(this.#character[index].sx);
+        $(`input:radio[name="gender"][value="${this.#character[index].sx}"]`).prop('checked', true);
         $("#hp").val(this.#character[index].hp);
         $("#mp").val(this.#character[index].mp);
         $("#str").val(this.#character[index].str);
         $("#int").val(this.#character[index].int);
         $("#dex").val(this.#character[index].dex);
         $("#lux").val(this.#character[index].lux);
-        // $("#birthDate").datepicker("setDate", this.#character[index].birthDate);
-        $("#showImg").val(this.#character[index].imgUrl);
+        $("#birthDate").val(`${this.#character[index].birthDate.getFullYear()}-${(this.#character[index].birthDate.getMonth()+1).toString().padStart(2,'0')}-${this.#character[index].birthDate.getDate()}`);
+        $("#imgUrl").val(this.#character[index].imgUrl);
+        $("#showImg").attr("src", this.#character[index].imgUrl);
         this.#selectedId = this.#character[index].id;
 
         $(".attacked_target").empty();
         this.#character.forEach((item) => {
             if (item.id !== this.#selectedId) {
-                $(".attacked_target").append(`<option></option>`);
+                $(".attacked_target").append(`<option>${item.name}</option>`);
             }
         })
     }
@@ -170,7 +207,8 @@ class Rpgfuncs {
         $("#int").val("0");
         $("#dex").val("0");
         $("#lux").val("0");
-        // $("#birthDate").datepicker("setDate", new Date());
+        $("#birthDate").val("");
+        $("#imgUrl").val("");
         this.#selectedId = -1;
     }
 
@@ -178,17 +216,18 @@ class Rpgfuncs {
     insertChara() {
         if (this.checkChara("add")) {
             let newChara = {
-                id: this.#character.reduce((acc, item) => (item > acc) ? item : acc, 0) + 1,
+                id: this.#character.reduce((acc, item) => (item.id > acc) ? item.id : acc, 0) + 1,
                 name: $("#name").val(), 
                 cls: $("#cls").val(),
-                sx: $("#sx").val(),
+                sx: $('input:radio[name="gender"]:checked').val(),
                 hp: parseInt($("#hp").val()),
                 mp: parseInt($("#mp").val()),
                 str: parseInt($("#str").val()),
                 int: parseInt($("#int").val()),
                 dex: parseInt($("#dex").val()),
                 lux: parseInt($("#lux").val()),
-                // birthDate: $("#birthDate").datePicker("getDate")
+                birthDate: new Date($("#birthDate").val()),
+                imgUrl: $("#imgUrl").val()
             };
 
             this.#character.push(newChara);
@@ -213,6 +252,7 @@ class Rpgfuncs {
             targetChara.lux = $("#lux").val();
             // targetChara.birthDate = $("#birthDate").datePicker("getDate");
 
+            this.printList();
             this.clearInput();
         }
     }
@@ -225,6 +265,7 @@ class Rpgfuncs {
             let index = this.#character.indexOf(targetChara);
             this.#character.splice(index, 1);
 
+            this.printList();
             this.clearInput();
         }
     }
@@ -300,6 +341,6 @@ $(() => {
     });
 
     $(document).on("click", ".lists", function(e) {
-        rpg.setInputChara($(this).index());
+        rpg.setInputChara($(this).index()-10);
     })
 });
