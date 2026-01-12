@@ -23,21 +23,28 @@ h1 {
     margin-top: 5px;
     width: 100%;
 }
-.listField {
-    display: flex;
-}
 
 .listTitleRow {
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
+.listDataRow {
+    display: flex;
+}
+.listItem {
+    margin: 1px;
+    padding: 1px;
+}
 .listItem2 {
     border: 1px solid black;
-    margin: 0px;
-    padding: 0px;
+    margin: 2px;
+    padding: 2px;
     width: 100%;
     text-align: center;
 }
 #name, #cls, #cx, #hp, #mp, #str, #int, #dex, #lux, #birthDate, #imgURL, #btn {
     width: 85%;
+    height: auto;
 }
