@@ -1,5 +1,5 @@
 h1 {
-    text-align: center;
+  text-align: center;
 }
 .inputField {
   display: grid;
@@ -13,38 +13,53 @@ h1 {
   justify-content: space-around;
 }
 .btn {
-    border-radius: 5px;
-    width: 33%;
+  border-radius: 5px;
+  width: 33%;
 }
 
 .attack {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 5px;
-    width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+  width: 100%;
 }
 
 .listTitleRow {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
 }
 
-.listDataRow {
+.listField {
     display: flex;
 }
+.listDataBlock {
+  display: flex;
+}
 .listItem {
-    margin: 1px;
-    padding: 1px;
+  display: grid;
+  width: 100%;
 }
 .listItem2 {
-    border: 1px solid black;
-    margin: 2px;
-    padding: 2px;
-    width: 100%;
-    text-align: center;
+  border: 1px solid black;
+  margin: 2px;
+  padding: 2px;
+  text-align: center;
 }
-#name, #cls, #cx, #hp, #mp, #str, #int, #dex, #lux, #birthDate, #imgURL, #btn {
-    width: 85%;
-    height: auto;
+#name,
+#cls,
+#cx,
+#hp,
+#mp,
+#str,
+#int,
+#dex,
+#lux,
+#birthDate,
+#imgURL,
+#btn {
+  width: 85%;
+  height: auto;
 }
