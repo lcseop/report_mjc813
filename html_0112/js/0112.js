@@ -11,7 +11,8 @@ class Rpgfuncs {
             int: 5,
             dex: 15,
             lux: 25,
-            birthDate: new Date()
+            birthDate: new Date(),
+            imgUrl: "none"
         },
         {
             id: 2,
@@ -24,7 +25,8 @@ class Rpgfuncs {
             int: 5,
             dex: 30,
             lux: 5,
-            birthDate: new Date()
+            birthDate: new Date(),
+            imgUrl: "none"
         },
     ];
     #selectedId = -1;
@@ -64,31 +66,35 @@ class Rpgfuncs {
     }
 
     // 조건 체크
-    checkChara(mode) {
-        if (mode !== "add" && this.#selectedId === -1) {
+    checkChara(mode, type="") {
+        if (mode === "att") {
+            let targetChara = this.#character.find(item => $("targetSId").val() === item.id);
+
+            if (type === "int" && this.#character[this.#selectedId].mp >= 50) {
+               alert("마나가 부족합니다.");
+            }
+
+            if (targetChara.hp <= 0) {
+               alert("대상이 이미 쓰러졌습니다.");
+            }
+        }
+        else {
+            if (mode !== "add" && this.#selectedId === -1) {
             alert("목록에서 캐릭터를 먼저 선택해주세요.");
+            }
+
+            if (mode !== "del" && ($("#name").val().length < 1 || $("#hp").val().length < 1 || $("#mp").val().length < 1 || $("#str").val().length < 1 || $("#dex").val().length < 1) || $("#int").val().length < 1 || $("#lux").val().length < 1) {
+                alert("모든 입력란에 값을 입력해주세요.");
+            }
+
+            if ($("#name").val().length < 2 || $("#name").val().length > 10) {
+                alert("이름은 2자~10자로 입력해주세요.");
+            }
+
+            if ($("#name").val().length < 2 || $("#name").val().length > 10) {
+                alert("이름은 2자~10자로 입력해주세요.");
+            }
         }
-
-        if (mode !== "del" && ($("#name").val().length < 1 || $("#hp").val().length < 1 || $("#mp").val().length < 1 || $("#str").val().length < 1 || $("#dex").val().length < 1) || $("#int").val().length < 1 || $("#lux").val().length < 1) {
-            alert("모든 입력란에 값을 입력해주세요.");
-        }
-
-        if ($("#name").val().length < 2 || $("#name").val().length > 10) {
-            alert("이름은 2자~10자로 입력해주세요.");
-        }
-
-        if ($("#name").val().length < 2 || $("#name").val().length > 10) {
-            alert("이름은 2자~10자로 입력해주세요.");
-        }
-
-        // 공격 임시용 조건
-        // if ((mode === "attS" || mode === "attI") && $("#target").val().length < 1) {
-        //     alert("타겟을 먼저 선택해주세요.")
-        // }
-
-        // if (mode === "attI" && this.#character[this.#selectedId].mp >= 50) {
-        //     alert("마나가 부족합니다.")
-        // }
     }
 
     // 목록 선택 시 값 입력
@@ -103,6 +109,7 @@ class Rpgfuncs {
         $("#dex").val(this.#character[index].dex);
         $("#lux").val(this.#character[index].lux);
         $("#birthDate").datepicker("setDate", this.#character[index].birthDate);
+        $("#showImg").val(this.#character[index].imgUrl);
         this.#selectedId = this.#character[index].id;
     }
 
@@ -177,12 +184,45 @@ class Rpgfuncs {
     }
     
     // B 캐릭터에게 물리 공격
-    attackStr(B) {
+    attackStr() {
+        if (this.checkChara("att", "str")) {
+            let attackChara = this.#character.find(item => this.#selectedId === item.id);
+            let targetChara = this.#character.find(item => $("targetSId").val() === item.id);
+            targetChara.hp -= 50;
+            if (targetChara.hp <= 0) {
+                targetChara.hp = 0;
+                alert(`${attackChara.name}이(가) ${targetChara.name}에게 50의 피해를 입혔다!
+                ${targetChara.name}은(는) 쓰러졌다.`);
+            } else {
+                alert(`${attackChara.name}이(가) ${targetChara.name}에게 50의 피해를 입혔다!
+                남은 체력 : ${targetChara.hp}`);
+            }
+        }
     }
 
     // B 캐릭터에게 마법 공격
-    attackInt(B) {
+    attackInt() {
+        if (this.checkChara("att", "int")) {
+            let attackChara = this.#character.find(item => this.#selectedId === item.id);
+            let targetChara = this.#character.find(item => $("targetIId").val() === item.id);
+            attackChara.mp -= 30;
+            targetChara.hp -= 75;
+            if (targetChara.hp <= 0) {
+                targetChara.hp = 0;
+                alert(`${attackChara.name}이(가) 30의 마나를 소모해 ${targetChara.name}에게 75의 피해를 입혔다!
+                ${targetChara.name}은(는) 쓰러졌다.`);
+            } else {
+                alert(`${attackChara.name}이(가) 30의 마나를 소모해 ${targetChara.name}에게 75의 피해를 입혔다!
+                남은 체력 : ${targetChara.hp}`);
+         }
+        }
+    }
 
+
+    // 디버깅용
+    viewTest() {
+        console.log(`객체 : ${this.#character}`);
+        console.log(`가장 높은 아이디 : ${this.#character.reduce((acc, item) => (item > acc) ? item : acc, 0)}`);
     }
 
 }
@@ -203,11 +243,11 @@ $(() => {
         rpg.deleteChara();
     });
 
-    $("#attackS").click(function(e) {
+    $("#attackStr").click(function(e) {
         rpg.attackStr();
     });
 
-    $("#attackI").click(function(e) {
+    $("#attackInt").click(function(e) {
         rpg.attackInt();
     });
 
