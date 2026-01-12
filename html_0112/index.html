@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RPG 게임 캐릭터</title>
     <link rel="stylesheet" href="../html_0112/css/index.css" />
+    <script src=".//js/jquery.min.js"></script>
   </head>
   <body>
     <header>
@@ -76,23 +77,25 @@
             </div>
           </div>
           <div class="attack">
-            <div>공격대상
-                <select id="attacked_target">
-                    <option>전사</option>
-                    <option>마법사</option>
-                    <option>궁수</option>
-                    <option>도적</option>
-                </select>
-                <button id="attackStr">STR 공격</button>
+            <div>
+              공격대상
+              <select class="attacked_target" id="atc_target1">
+                <option>전사</option>
+                <option>마법사</option>
+                <option>궁수</option>
+                <option>도적</option>
+              </select>
+              <button id="attackStr">STR 공격</button>
             </div>
-            <div>공격대상
-                <select id="attacked_target">
-                    <option>전사</option>
-                    <option>마법사</option>
-                    <option>궁수</option>
-                    <option>도적</option>
-                </select>
-                <button id="attackInt">INT 공격</button>
+            <div>
+              공격대상
+              <select class="attacked_target" id="atc_target2">
+                <option>전사</option>
+                <option>마법사</option>
+                <option>궁수</option>
+                <option>도적</option>
+              </select>
+              <button id="attackInt">INT 공격</button>
             </div>
           </div>
         </fieldset>
@@ -139,4 +142,4 @@
   </body>
 </html>
 <script src=".//js/0112.js"></script>
-<script src=".//js/jquery.min.js"></script>
+
