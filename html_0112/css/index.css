@@ -1,9 +1,12 @@
+h1 {
+    text-align: center;
+}
 .inputField {
   display: grid;
   text-align: left;
 }
 .inputImg {
-  justify-content: end;
+  text-align: center;
 }
 .btns {
   display: flex;
@@ -14,14 +17,26 @@
     width: 33%;
 }
 
-.listTitleRow div {
-  display: grid;
-  grid-template-columns: repeat(3, (minmax(100px, auto)));
+.attack {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+    width: 100%;
+}
+.listField {
+    display: flex;
+}
+
+.listTitleRow {
+
 }
 
 .listItem2 {
     border: 1px solid black;
-    margin: 1px;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
 }
 #name, #cls, #cx, #hp, #mp, #str, #int, #dex, #lux, #birthDate, #imgURL, #btn {
     width: 85%;
