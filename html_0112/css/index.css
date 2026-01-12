@@ -1,0 +1,12 @@
+.inputField {
+    display: grid;
+    text-align: left;
+}
+
+
+
+.btns {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+}
