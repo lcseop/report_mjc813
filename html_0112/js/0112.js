@@ -195,7 +195,7 @@ class Rpgfuncs {
                 ${targetChara.name}은(는) 쓰러졌다.`);
             } else {
                 alert(`${attackChara.name}이(가) ${targetChara.name}에게 50의 피해를 입혔다!
-                남은 체력 : ${targetChara.hp}`);
+                ${targetChara.name}의 남은 체력 : ${targetChara.hp}`);
             }
         }
     }
@@ -210,10 +210,12 @@ class Rpgfuncs {
             if (targetChara.hp <= 0) {
                 targetChara.hp = 0;
                 alert(`${attackChara.name}이(가) 30의 마나를 소모해 ${targetChara.name}에게 75의 피해를 입혔다!
+                ${attackChara.name}의 남은 마나 : ${attackChara.mp}
                 ${targetChara.name}은(는) 쓰러졌다.`);
             } else {
                 alert(`${attackChara.name}이(가) 30의 마나를 소모해 ${targetChara.name}에게 75의 피해를 입혔다!
-                남은 체력 : ${targetChara.hp}`);
+                ${attackChara.name}의 남은 마나 : ${attackChara.mp}
+                ${targetChara.name}의 남은 체력 : ${targetChara.hp}`);
          }
         }
     }
