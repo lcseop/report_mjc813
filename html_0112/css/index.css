@@ -11,11 +11,12 @@
   margin-top: 5px;
 }
 
-.listTitleRow {
+.listTitleRow div {
+  display: grid;
+  grid-template-columns: repeat(3, (minmax(100px, auto)));
 }
 
-.listItem {
-  border: 1px solid black;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+.listItem2 {
+    border: 1px solid black;
+    margin: 1px;
 }
